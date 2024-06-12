@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {PAGES, PROJECT_STATUS_OPTIONS, PROJECT_TYPES_OPTIONS} from "../../../app.constants";
-import {Project} from "../../../core/models/project.model";
+import {PAGES} from "../../../app.constants";
+import {ProjectDto} from "../../../core/models/project.dto";
 import {DateTimeUtility} from "../../../core/utilities/date-time.utility";
 import {Router} from "@angular/router";
 import {ProjectService} from "../../../core/services/project.service";
+import {MasterdataService} from "../../../core/services/masterdata.service";
 
 @Component({
     selector: 'app-project-form',
@@ -13,8 +14,6 @@ import {ProjectService} from "../../../core/services/project.service";
 })
 export class ProjectFormComponent implements OnInit {
 
-    readonly PROJECT_TYPES = PROJECT_TYPES_OPTIONS;
-    readonly PROJECT_STATUS = PROJECT_STATUS_OPTIONS;
 
     @Input() title: string = 'PROJECT FORM';
     @Input() formType: 'create' | 'edit' = 'create';
@@ -22,11 +21,13 @@ export class ProjectFormComponent implements OnInit {
 
 
     private loading: boolean = false;
-    private project: Project = {} as Project;
+    private statusFlows: Array<{ label: string, value: string }> = [];
+    private project: ProjectDto = {} as ProjectDto;
     private formGroup: FormGroup = new FormGroup({});
 
 
     constructor(
+        private masterdataService: MasterdataService,
         private projectService: ProjectService,
         private router: Router,
     ) {
@@ -35,6 +36,10 @@ export class ProjectFormComponent implements OnInit {
 
     get isLoading(): boolean {
         return this.loading;
+    }
+
+    get projectStatusOptions(): Array<{ label: string, value: string }> {
+        return this.statusFlows ?? [];
     }
 
     get isCreateForm(): boolean {
@@ -104,6 +109,9 @@ export class ProjectFormComponent implements OnInit {
 
     private async initDataAndForm(): Promise<void> {
         this.loading = true;
+        this.statusFlows = (await this.masterdataService.getStatusFlows()).map((statusFlow) => {
+            return {label: statusFlow.label, value: statusFlow.id};
+        });
         await this.recoverProjectDataFromService();
         this.initForm();
         this.loading = false;
@@ -116,7 +124,6 @@ export class ProjectFormComponent implements OnInit {
                 this.project = result!;
             } catch (e) {
                 console.error(e);
-                this.router.navigate([PAGES.HOME]);
             }
         }
     }

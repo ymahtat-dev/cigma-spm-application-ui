@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Project} from "../../../core/models/project.model";
+import {ProjectDto} from "../../../core/models/project.dto";
 import {ProjectService} from "../../../core/services/project.service";
 import {Router} from "@angular/router";
 
@@ -14,7 +14,7 @@ export class ProjectDatagridComponent implements OnInit {
     readonly DISPLAYED_COLUMNS: string[] = ['id', 'name', 'description', 'type', 'status', 'startDate', 'provisionalEndDate', 'endDate', 'actions'];
 
     private loading = false;
-    private dataSource = new MatTableDataSource<Project>([]);
+    private dataSource = new MatTableDataSource<ProjectDto>([]);
 
     constructor(
         private projectService: ProjectService,
@@ -26,7 +26,7 @@ export class ProjectDatagridComponent implements OnInit {
         return this.loading;
     }
 
-    get projectsDataSource(): MatTableDataSource<Project> {
+    get projectsDataSource(): MatTableDataSource<ProjectDto> {
         return this.dataSource;
     }
 
@@ -39,13 +39,13 @@ export class ProjectDatagridComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    public editProject(project: Project) {
+    public editProject(project: ProjectDto) {
         this.router.navigate(['project', project.id]);
     }
 
     private loadProjects(): void {
         this.loading = true;
-        this.projectService.getProjects().subscribe((projects: Array<Project>) => {
+        this.projectService.getProjects().subscribe((projects: Array<ProjectDto>) => {
             this.dataSource.data = projects;
             this.loading = false;
         });

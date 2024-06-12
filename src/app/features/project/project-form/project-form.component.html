@@ -10,9 +10,8 @@
                 }
                 <app-text-field label="Nom Projet" [rfControl]="nameControl" [isRequired]="true"/>
                 <app-textarea-field label="Description" [rfControl]="descriptionControl" [isRequired]="true"/>
-                <app-dropdown-field label="Type" [rfControl]="typeControl" [options]="PROJECT_TYPES"
-                                    [isRequired]="true"/>
-                <app-dropdown-field label="Statut" [rfControl]="statusControl" [options]="PROJECT_STATUS"
+                <app-text-field label="Type" [rfControl]="typeControl" [isRequired]="true"/>
+                <app-dropdown-field label="Statut" [rfControl]="statusControl" [options]="projectStatusOptions"
                                     [isRequired]="true"/>
                 <app-date-field label="Date Debut" [rfControl]="startDateControl" [isRequired]="true"/>
                 <app-date-field label="Date Fin Prévisionnel" [rfControl]="provisionalEndDateControl"

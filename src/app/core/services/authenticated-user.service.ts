@@ -36,10 +36,10 @@ export class AuthenticatedUserService {
                 message: 'User authenticated, recoved from cookie.',
                 token
             } as UserAuthResponseDto);
+            this.authService.getCurrentUserDetails().subscribe((userDetails: UserDetailsDto) => {
+                this.userDetailsBehaviorSubject.next(userDetails);
+            });
         }
-        this.authService.getCurrentUserDetails().subscribe((userDetails: UserDetailsDto) => {
-            this.userDetailsBehaviorSubject.next(userDetails);
-        });
     }
 
     public saveUserAuth(userAuthResponse: UserAuthResponseDto): void {
@@ -60,12 +60,8 @@ export class AuthenticatedUserService {
         return this.userAuthObservable;
     }
 
-    public get isAuthenticated(): Observable<boolean> {
-        return this.userAuthObservable.pipe(map((userAuth: UserAuthResponseDto) => Boolean(userAuth.token)));
-    }
-
-    public get tokenAsObsarvable(): Observable<string> {
-        return this.userAuthObservable.pipe(map((userAuth: UserAuthResponseDto) => userAuth.token));
+    public get isAuthenticated(): boolean {
+        return Boolean(this.userAuthBehaviorSubject.getValue().token);
     }
 
     public get token(): string {

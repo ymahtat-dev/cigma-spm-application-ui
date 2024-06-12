@@ -1,11 +1,14 @@
 import {Routes} from '@angular/router';
 import {MainContainerComponent} from "./features/layout/main-container/main-container.component";
 import {PAGES} from "./app.constants";
+import {authGuardFn} from "./core/guards/auth.guard";
+import {adminGuardFn} from "./core/guards/admin.guard";
 
 export const ROUTES: Routes = [
     {
         path: '',
         component: MainContainerComponent,
+        canActivate: [authGuardFn],
         children: [
             {
                 path: '',
@@ -15,6 +18,11 @@ export const ROUTES: Routes = [
             {
                 path: PAGES.HOME,
                 loadComponent: () => import('./pages-components/home-page/home-page.component').then(m => m.HomePageComponent),
+            },
+            {
+                path: PAGES.ADMIN_WORKS,
+                loadComponent: () => import('./pages-components/admin-works-page/admin-works-page.component').then(m => m.AdminWorksPageComponent),
+                canActivate: [adminGuardFn],
             },
             {
                 path: PAGES.ABOUT,
@@ -37,5 +45,18 @@ export const ROUTES: Routes = [
     {
         path: PAGES.LOGIN,
         loadComponent: () => import('./pages-components/login-page/login-page.component').then(m => m.LoginPageComponent),
+    },
+    {
+        path: PAGES.FORBIDDEN_ERROR,
+        loadComponent: () => import('./pages-components/forbidden-error-page/forbidden-error-page.component').then(m => m.ForbiddenErrorPageComponent),
+    },
+    {
+        path: PAGES.NOT_FOUND_ERROR,
+        loadComponent: () => import('./pages-components/not-found-error-page/not-found-error-page.component').then(m => m.NotFoundErrorPageComponent),
+    },
+    {
+        path: '**',
+        redirectTo: PAGES.NOT_FOUND_ERROR,
+        pathMatch: 'full',
     }
 ];

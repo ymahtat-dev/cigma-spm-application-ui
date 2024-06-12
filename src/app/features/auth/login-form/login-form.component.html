@@ -6,7 +6,8 @@
         <mat-card-content class="login-form-content">
             <app-form [formGroup]="userAuthRequestFormGroup">
                 <app-text-field label="NOM UTILISATEUR" [rfControl]="usernameControl" [isRequired]="true"/>
-                <app-text-field label="MOT DE PASSE" [rfControl]="passwordControl" [isSecret]="true" [isRequired]="true"/>
+                <app-text-field label="MOT DE PASSE" [rfControl]="passwordControl" [isSecret]="true"
+                                [isRequired]="true"/>
             </app-form>
         </mat-card-content>
         <mat-card-actions class="login-form-actions">

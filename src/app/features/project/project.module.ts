@@ -9,6 +9,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {MatIconModule} from "@angular/material/icon";
     ],
     imports: [
         CommonModule,
+        SharedModule,
         MatCardModule,
         MatButtonModule,
         FormFieldModule,

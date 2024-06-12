@@ -9,6 +9,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {MatListModule} from "@angular/material/list";
         MatIconModule,
         MatSidenavModule,
         MatListModule,
+        SharedModule,
     ]
 })
 export class LayoutModule {

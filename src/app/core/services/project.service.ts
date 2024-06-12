@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Project} from "../models/project.model";
+import {ProjectDto} from "../models/project.dto";
 import {API_CONTEXT_URI, WEB_SERVICE_URI} from "../../app.constants";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable, of} from "rxjs";
@@ -14,22 +14,22 @@ export class ProjectService {
     ) {
     }
 
-    public getProjects(): Observable<Array<Project>> {
+    public getProjects(): Observable<Array<ProjectDto>> {
         const url = `${API_CONTEXT_URI}/${WEB_SERVICE_URI.PROJECTS}`;
-        return this.http.get(url).pipe(map((response: any) => response as Array<Project>));
+        return this.http.get(url).pipe(map((response: any) => response as Array<ProjectDto>));
     }
 
-    public getProjectById(id: number): Observable<Project> {
+    public getProjectById(id: number): Observable<ProjectDto> {
         const url = `${API_CONTEXT_URI}/${WEB_SERVICE_URI.PROJECTS}/${id}`;
-        return this.http.get(url).pipe(map((response: any) => response as Project))
+        return this.http.get(url).pipe(map((response: any) => response as ProjectDto))
     }
 
-    public createProject(project: Project): Observable<any> {
+    public createProject(project: ProjectDto): Observable<any> {
         const url = `${API_CONTEXT_URI}/${WEB_SERVICE_URI.PROJECTS}`;
         return this.http.post(url, project);
     }
 
-    public updateProject(project: Project): Observable<any> {
+    public updateProject(project: ProjectDto): Observable<any> {
         if (project.id) {
             const url = `${API_CONTEXT_URI}/${WEB_SERVICE_URI.PROJECTS}/${project.id}`;
             return this.http.put(url, project);
