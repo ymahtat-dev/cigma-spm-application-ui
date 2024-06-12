@@ -8,16 +8,11 @@ export const requestHttpInterceptorFn: HttpInterceptorFn = (
     next: HttpHandlerFn
 ): Observable<HttpEvent<any>> => {
     const authenticatedUserService = inject(AuthenticatedUserService);
-    return authenticatedUserService.getUserAuth().pipe(mergeMap((userAuth) => {
-        const token = userAuth.token ?? '';
-        const cloned = req.clone({
-            setHeaders: {
-                authorization: `Bearer ${token}`,
-            },
-        });
-        return next(cloned);
-    })).pipe(catchError((error) => {
-        console.error('Error on RequestHttpInterceptor', error);
-        return next(req);
-    }));
+    const token = authenticatedUserService.token;
+    const cloned = req.clone({
+        setHeaders: {
+            authorization: `Bearer ${token}`,
+        },
+    });
+    return next(cloned);
 };

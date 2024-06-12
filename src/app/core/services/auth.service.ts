@@ -22,7 +22,7 @@ export class AuthService {
         return this.http.post(url, userAuthRequest).pipe(map((response: any) => response as UserAuthResponseDto));
     }
 
-    public getCurrentUserDetails(token: string): Observable<UserDetailsDto> {
+    public getCurrentUserDetails(): Observable<UserDetailsDto> {
         const url = `${API_CONTEXT_URI}/${WEB_SERVICE_URI.GET_PROFILE}`;
         return this.http.get(url).pipe(map((response: any) => response as UserDetailsDto));
     }

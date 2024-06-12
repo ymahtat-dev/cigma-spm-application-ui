@@ -37,7 +37,7 @@ export class AuthenticatedUserService {
                 token
             } as UserAuthResponseDto);
         }
-        this.authService.getCurrentUserDetails(token).subscribe((userDetails: UserDetailsDto) => {
+        this.authService.getCurrentUserDetails().subscribe((userDetails: UserDetailsDto) => {
             this.userDetailsBehaviorSubject.next(userDetails);
         });
     }
@@ -64,8 +64,12 @@ export class AuthenticatedUserService {
         return this.userAuthObservable.pipe(map((userAuth: UserAuthResponseDto) => Boolean(userAuth.token)));
     }
 
-    public get token(): Observable<string> {
+    public get tokenAsObsarvable(): Observable<string> {
         return this.userAuthObservable.pipe(map((userAuth: UserAuthResponseDto) => userAuth.token));
+    }
+
+    public get token(): string {
+        return this.userAuthBehaviorSubject.getValue().token;
     }
 
     // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,6 +90,11 @@ export class AuthenticatedUserService {
     public getUserDetails(): Observable<UserDetailsDto> {
         if (!this.userAuthBehaviorSubject.getValue().token) {
             this.recoverUserAuthFromCookie();
+        }
+        if (!this.userDetailsBehaviorSubject.getValue().username) {
+            this.authService.getCurrentUserDetails().subscribe((userDetails: UserDetailsDto) => {
+                this.userDetailsBehaviorSubject.next(userDetails);
+            });
         }
         return this.userDetailsObservable;
     }

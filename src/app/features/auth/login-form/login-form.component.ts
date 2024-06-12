@@ -85,29 +85,13 @@ export class LoginFormComponent implements OnInit {
         );
         this.authService.login(this.userAuthRequest).subscribe(
             result => {
-                console.log('response', result);
                 this.authenticatedUserService.saveUserAuth(result);
-                this.authenticatedUserService.saveUserDetails({
-                    id: 1,
-                    firstname: "AZIZ",
-                    lastname: "MILOZOVIC",
-                    username: "admin",
-                    gender: "male",
-                    birthdate: "1987-03-02",
-                    email: "admin@cigma.ma",
-                    pictureUrl: "https://www.pngmart.com/files/21/Admin-Profile-Transparent-PNG.png",
-                    userType: "admin",
-                    study: null
-                });
+                loadingDialogRef.close();
                 this.router.navigate([PAGES.HOME]);
             },
             error => {
-                console.error('error', error);
                 loadingDialogRef.close();
-            },
-            () => {
-                console.log('complete');
-                loadingDialogRef.close();
+                console.error('ERROR', error);
             }
         );
     }
