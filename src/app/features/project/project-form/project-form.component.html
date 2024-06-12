@@ -1,0 +1,38 @@
+@if (!isLoading && projectFormGroup) {
+    <mat-card class="project-form-card">
+        <mat-card-header class="project-form-header">
+            <mat-card-title>{{ title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="project-form-content">
+            <app-form [formGroup]="projectFormGroup">
+                @if (isEditForm) {
+                    <app-text-field label="ID Projet" [rfControl]="idControl" [isReadOnly]="true"/>
+                }
+                <app-text-field label="Nom Projet" [rfControl]="nameControl" [isRequired]="true"/>
+                <app-textarea-field label="Description" [rfControl]="descriptionControl" [isRequired]="true"/>
+                <app-dropdown-field label="Type" [rfControl]="typeControl" [options]="PROJECT_TYPES"
+                                    [isRequired]="true"/>
+                <app-dropdown-field label="Statut" [rfControl]="statusControl" [options]="PROJECT_STATUS"
+                                    [isRequired]="true"/>
+                <app-date-field label="Date Debut" [rfControl]="startDateControl" [isRequired]="true"/>
+                <app-date-field label="Date Fin Prévisionnel" [rfControl]="provisionalEndDateControl"
+                                [isRequired]="true"/>
+                @if (isEditForm) {
+                    <app-date-field label="Date Fin" [rfControl]="endDateControl"/>
+                }
+            </app-form>
+        </mat-card-content>
+        <mat-card-actions class="project-form-actions">
+            <button mat-raised-button color="warn" (click)="onClickCancelHandler()">
+                ANNULER
+            </button>
+            <button mat-raised-button color="primary" [disabled]="!formValid" (click)="onClickValidateHandler()">
+                VALIDER
+            </button>
+        </mat-card-actions>
+    </mat-card>
+} @else if (isLoading) {
+    <mat-spinner></mat-spinner>
+} @else {
+    <p>ERROR !</p>
+}

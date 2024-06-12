@@ -1,0 +1,10 @@
+<mat-form-field class="field" appearance="outline">
+    <mat-label>{{ label }}</mat-label>
+    <input matInput
+           type="{{ isSecret ? 'password' : 'text' }}"
+           [formControl]="rfControl"
+           [required]="isRequired"
+           [readonly]="isReadOnly"
+           [disabled]="isDisabled"
+           [placeholder]="placeholder">
+</mat-form-field>

@@ -1,0 +1,10 @@
+.login-container {
+    height: calc(100% - 2rem);
+    width: calc(100% - 2rem);
+    padding: 1rem;
+
+    .login-content {
+        width: 50%;
+        margin: auto;
+    }
+}

@@ -1,0 +1,11 @@
+<mat-form-field class="field" appearance="outline">
+    <mat-label>{{ label }}</mat-label>
+    <input matInput
+           [formControl]="rfControl"
+           [matDatepicker]="picker"
+           [required]="isRequired"
+           [readonly]="isReadOnly"
+           [disabled]="isDisabled">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

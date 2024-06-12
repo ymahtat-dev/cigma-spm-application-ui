@@ -1,0 +1,22 @@
+@if (!isLoading && userAuthRequestFormGroup) {
+    <mat-card class="login-form-card">
+        <mat-card-header class="login-form-header">
+            <mat-card-title>{{ title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="login-form-content">
+            <app-form [formGroup]="userAuthRequestFormGroup">
+                <app-text-field label="NOM UTILISATEUR" [rfControl]="usernameControl" [isRequired]="true"/>
+                <app-text-field label="MOT DE PASSE" [rfControl]="passwordControl" [isSecret]="true" [isRequired]="true"/>
+            </app-form>
+        </mat-card-content>
+        <mat-card-actions class="login-form-actions">
+            <button mat-raised-button color="primary" [disabled]="!formValid" (click)="onClickSignInHandler()">
+                VALIDER
+            </button>
+        </mat-card-actions>
+    </mat-card>
+} @else if (isLoading) {
+    <mat-spinner></mat-spinner>
+} @else {
+    <p>ERROR !</p>
+}

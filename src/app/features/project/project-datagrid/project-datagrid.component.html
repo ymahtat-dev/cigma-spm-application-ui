@@ -1,0 +1,59 @@
+<div class="projects-datagrid-container">
+    @if (!isLoading && projectsDataSource.data.length > 0) {
+        <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="projectsDataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let element"> {{ element.id }}</td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef>Description</th>
+                <td mat-cell *matCellDef="let element"> {{ element.description }}</td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>Type</th>
+                <td mat-cell *matCellDef="let element"> {{ element.type }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let element"> {{ element.status }}</td>
+            </ng-container>
+            <ng-container matColumnDef="startDate">
+                <th mat-header-cell *matHeaderCellDef>Date Debut</th>
+                <td mat-cell *matCellDef="let element"> {{ element.startDate | date : 'dd/MM/YYYY' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="provisionalEndDate">
+                <th mat-header-cell *matHeaderCellDef>Date Fin Prévisionnelle</th>
+                <td mat-cell *matCellDef="let element"> {{ element.provisionalEndDate  | date : 'dd/MM/YYYY' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="endDate">
+                <th mat-header-cell *matHeaderCellDef>Date Fin</th>
+                <td mat-cell *matCellDef="let element"> {{ element.endDate | date : 'dd/MM/YYYY' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="primary" (click)="editProject(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="DISPLAYED_COLUMNS"></tr>
+            <tr mat-row *matRowDef="let row; columns: DISPLAYED_COLUMNS;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
+            </tr>
+        </table>
+    } @else if (isLoading) {
+        <mat-spinner></mat-spinner>
+    } @else {
+        <p>No data</p>
+    }
+</div>

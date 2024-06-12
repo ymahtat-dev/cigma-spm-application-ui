@@ -1,0 +1,13 @@
+<div class="layout-container">
+    <app-top-nav class="top-nav-container" (onToggleMenuOutput)="drawer.toggle()"/>
+    <mat-drawer-container class="main-container">
+        <mat-drawer #drawer class="side-nav-container" mode="side" [(opened)]="showSideNav">
+            <app-side-nav/>
+        </mat-drawer>
+        <mat-drawer-content class="drawer-content-container" [ngClass]="showSideNav ? 'partial' : 'full'">
+            <div class="main-content">
+                <router-outlet/>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>
